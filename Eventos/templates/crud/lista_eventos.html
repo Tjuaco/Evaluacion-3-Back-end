@@ -1,0 +1,62 @@
+{% extends "crud/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5" style="background-color: rgb(250, 248, 240);">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <img src="{% static 'imagenes/evento.png' %}" alt="Logo" style="width: 40px; height: 40px; margin-right: 10px;">
+            <h1>Eventos registrados</h1>
+        </div>
+        <a href="{% url 'crear_evento' %}" class="btn btn-dark">Crear Evento</a>
+    </div>
+
+    {% if eventos %}
+        <ul class="list-group">
+            {% for evento in eventos %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="mb-2" style="font-size: x-large;"><strong>Evento:</strong>{{ evento.nombre }}</p>
+                            <p class="mb-2"><strong>Descripcion:</strong> {{ evento.descripcion }}</p>
+                            <p class="mb-2"><strong>Fecha:</strong> {{ evento.fecha }}</p>
+                            <p class="mb-2"><strong>Ubicación:</strong> {{ evento.ubicacion.nombre }}</p>
+                            <p class="mb-2"><strong>Categoría:</strong> {{ evento.categoria.nombre }}</p>
+                            <!--botones eliminar y actualizar -->
+                            <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-outline-danger mr-2">Eliminar</a>
+                            <a href="{% url 'actualizar_evento' evento.id %}" class="btn btn-outline-primary">Actualizar</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div style="margin-left: 40%;">
+            <p>No hay eventos registrados :c</p>
+        </div>  
+    {% endif %}
+</div>
+
+<!-- Estilos -->
+<style>
+    body {
+        background-color: rgb(241, 239, 231);
+    }
+
+    .container {
+        margin-top: 50px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    h1 {
+        color: #343a40;
+    }
+
+    th, td {
+        text-align: center;
+    }
+</style>
+{% endblock %}
